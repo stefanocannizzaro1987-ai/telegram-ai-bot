@@ -24,5 +24,4 @@ async def handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
 app = Application.builder().token(TELEGRAM_TOKEN).build()
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle))
 
-if __name__ == "__main__":
-    app.run_polling()
+app.run_polling()
