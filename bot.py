@@ -9,17 +9,22 @@ OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 async def handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_text = update.message.text
+    try:
+        user_text = update.message.text
 
-    response = client.chat.completions.create(
-        model="gpt-5.3-mini",
-        messages=[
-            {"role": "system", "content": "Sei un assistente tecnico, sintetico e preciso."},
-            {"role": "user", "content": user_text}
-        ]
-    )
+        response = client.chat.completions.create(
+            model="gpt-5.3-mini",
+            messages=[
+                {"role": "system", "content": "Sei un assistente tecnico, sintetico e preciso."},
+                {"role": "user", "content": user_text}
+            ]
+        )
 
-    await update.message.reply_text(response.choices[0].message.content)
+        await update.message.reply_text(response.choices[0].message.content)
+
+    except Exception as e:
+        print("ERROR:", e)
+        await update.message.reply_text("Errore temporaneo del modello.")
 
 app = Application.builder().token(TELEGRAM_TOKEN).build()
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle))
