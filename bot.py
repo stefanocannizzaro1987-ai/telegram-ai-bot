@@ -13,7 +13,7 @@ async def handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_text = update.message.text
 
         response = client.chat.completions.create(
-            model="gpt-5.3-mini",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "Sei un assistente tecnico, sintetico e preciso."},
                 {"role": "user", "content": user_text}
